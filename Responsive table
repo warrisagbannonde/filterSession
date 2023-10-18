@@ -1,1 +1,26 @@
 Responsive table
+<!-- Gestion des sessions et des utilisateurs internes -->
+<div class="mb-4">
+    <button class="accordion" @click="paramsToggleAccordion">
+        <div class="group flex items-center py-3">
+            <div>
+                <Icon name="dashboard" class="mr-2 w-4 h-4"
+                      :class="isUrl('candiatures') ? 'fill-white' : 'fill-yellow-400 group-hover:fill-white'" />
+            </div>
+            <div class="cursor-pointer text-yellow-300 flex items-center"
+                 :class="isUrl('candidatures') ? 'text-white' : 'text-yellow-300 group-hover:text-white'">
+                <div>
+                    Paramètres
+                </div>
+                <Icon class="w-5 h-5 ml-2 transition-transform transform"
+                      :class="isOpenParams ? 'rotate-90' : ''"
+                      :class="isUrl('candiatures') ? 'fill-white' : 'fill-yellow-400 group-hover:fill-white'"
+                      name="cheveron-down" style="display: inline-block;" />
+            </div>
+        </div>
+    </button>
+    <div class="panel " v-show="isOpenParams">
+        <Link :href="route('sessions.index')" class="group flex items-center py-3 text-white"> Sessions</Link>
+        <Link :href="route('internUsers.index')" class="group flex items-center py-3 text-white"> Utilisateurs internes</Link>
+    </div>
+</div>

@@ -1,51 +1,54 @@
 <template>
-    <form @submit.prevent>
-        <input class="ml-3 mt-5 rounded shadow h-10 w-56" type="text" placeholder="Rechercher un nom..."
-            v-model="searchValue">
-        <button type="button" class=" ml-4 bg-amber-500 py-2 px-5 rounded-lg shadow-sm text-white hover:bg-amber-400"
-            @click="filterUsers">Filtrer</button>
-    </form>
-    <table class="w-full whitespace-nowrap">
-        <thead>
-            <tr class="text-left font-bold">
-                <th class="pb-4 pt-6 px-6 opacity-70">id</th>
-                <th class="pb-4 pt-6 px-6 opacity-70">firstname</th>
-                <th class="pb-4 pt-6 px-6 opacity-70">lastname</th>
-                <th class="pb-4 pt-6 px-6 opacity-70">email</th>
-                <th class="pb-4 pt-6 px-6 opacity-70">phone</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="p-4 hover:bg-gray-100 focus:within:bg-gray-100" v-for="(intern, index) in filteredUsers"
-                :key="intern.id" :int="intern">
-                <td class="border-t px-6 py-4 m-6">{{ index + 1 }}</td>
-                <td class="border-t px-6 py-4 m-6">{{ intern.firstname }}</td>
-                <td class="border-t px-6 py-4 m-6">{{ intern.lastname }}</td>
-                <td class="border-t px-6 py-4 m-6">{{ intern.email }}</td>
-                <td class="border-t px-6 py-4 m-6">{{ intern.phone }}</td>
-            </tr>
-        </tbody>
-    </table>
+  <div>
+    <button class="accordion" @click="toggleAccordion">
+      Lien 1
+    </button>
+    <div class="panel" v-show="isOpen">
+      Contenu du lien 1
+    </div>
+
+    <!-- Ajoutez d'autres boutons et panneaux ici pour les autres liens -->
+
+  </div>
 </template>
 
-<script setup>
-import { ref, watch } from 'vue';
-
-
-const props = defineProps(['interns']);
-const searchValue = ref('');
-
-let filteredUsers = ref(props.interns);
-
-function filterUsers() {
-    filteredUsers.value = props.interns.filter((intern) =>
-        intern.firstname.toLowerCase().includes(searchValue.value.toLowerCase()) ||
-        intern.lastname.toLowerCase().includes(searchValue.value.toLowerCase())
-    );
-}
-
-watch(searchValue, () => {
-    filterUsers();
-});
+<script>
+export default {
+  data() {
+    return {
+      isOpen: false
+    };
+  },
+  methods: {
+    toggleAccordion() {
+      this.isOpen = !this.isOpen;
+    }
+  }
+};
 </script>
 
+<style scoped>
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+.panel {
+  padding: 18px;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+</style>
